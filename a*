@@ -1,0 +1,42 @@
+def astar(graph,start,goal,h):
+    openlist=[start]
+    v=set()
+    cost={start:0}
+    while openlist:
+        c=openlist[0]
+        minpath=cost[c]+h[c]
+        for i in openlist:
+            if cost[i]+h[i]<minpath:
+                minpath=cost[i]+h[i]
+                c=i
+            if c==goal:
+                return cost[c]
+            openlist.remove(c)
+            v.add(c)
+            for n,co in graph[c].items():
+                if n in v:
+                    continue
+                newcost=cost[c]+co
+                if n not in cost:
+                    cost[n]=newcost
+                    if n not in openlist:
+                        openlist.append(n)
+    return 9999
+graph = {
+    'A': {'B': 23, 'C': 4},
+    'B': {'C': 2, 'D': 3},
+    'C': {'D': 2},
+    'D': {}
+}
+
+heuristic = {
+    'A': 7,
+    'B': 10,
+    'C': 2,
+    'D': 0
+}
+
+start = 'A'
+goal = 'D'
+
+print(f"Minimum cost to reach {goal} from {start}: {astar(graph, start, goal, heuristic)}")
