@@ -1,0 +1,21 @@
+from itertools import permutations
+def tonumber(mapping,word):
+    return int(''.join(str(mapping[char]) for char in word))
+def crypt(send,more,money):
+    letters=''.join(set(send+more+money))
+    if len(letters)>10:
+        print("Impossible")
+        return
+    for i in permutations(range(10),len(letters)):
+        mapping=dict(zip(letters,i))
+        send_num=tonumber(mapping,send)
+        more_num=tonumber(mapping,more)
+        money_num=tonumber(mapping,money)
+        if(send_num + more_num == money_num):
+            print( mapping)
+            break;
+        
+send=input("Enter First word:")
+more=input("Enter Second Word:")
+money=input("Enter Third Word:")
+crypt(send,more,money) 
