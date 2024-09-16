@@ -1,0 +1,22 @@
+from collections import deque
+def bfs():
+    intial=(3,3,1)
+    goal=(0,0,0)
+    v=set()
+    q=deque([(intial,[])])
+    v.add(intial)
+    while q:
+        (m,c,boat),path=q.popleft()
+        if (m,c,boat)==goal:
+            return path+[(m,c,boat)]
+        for m1,c1 in [(0,1),(1,0),(2,0),(0,2),(1,1)]:
+            if boat==1:
+                newm,newc=m-m1,c-c1
+            else:
+                newm,newc=m1+m,c1+c
+            if (( 0<=newm<=3 and 0<=newc<=3) and (newm==0 or newm>=newc) and ((3-newm>=3-newc)  or 3-newm==0)):
+                newstate=(newm,newc,1-boat)
+                if newstate not in v:
+                    v.add(newstate)
+                q.append((newstate,path+[(m,c,boat)]))
+print(bfs())
