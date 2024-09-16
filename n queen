@@ -1,0 +1,27 @@
+def safe(board,r,c):
+    for i in range(c):
+        if(board[r][i]=='Q'):
+            return False
+    for x,y in zip((range(r,-1,-1)),range(c,-1,-1)):
+                   if(board[x][y]=='Q'):
+                       return False
+    for x,y in zip((range(r,n,1)),range(c,-1,-1)):
+                   if(board[x][y]=='Q'):
+                      return False
+    return True
+def gen(board,c):
+    global n
+    if c>=n:
+        return True
+    for i in range(n):
+        if(safe(board,i,c)==True):
+            board[i][c]='Q'
+            if(gen(board,c+1)==True):
+                return True
+            board[i][c]=0
+    return None
+n=int(input("Enter Number:"))
+board=[[0 for i in range(n)]for j in range(n)]
+gen(board,0)
+for i in board:
+    print(i) 
